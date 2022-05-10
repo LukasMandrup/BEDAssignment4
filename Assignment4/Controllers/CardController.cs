@@ -13,7 +13,7 @@ using MongoDB.Driver;
 
 namespace Assignment4.Controllers;
 
-[Route("api/[controller]")]
+[Route("cards")]
 [ApiController]
 public class CardController : ControllerBase
 {
@@ -25,6 +25,29 @@ public class CardController : ControllerBase
 		_service = service;
 		_logger = logger;
 	}
+
+	[HttpGet]
+	public async Task<ActionResult<IEnumerable<Card>>> Get(int? page = 0, int? setid = null, string? artist = null, int? classid = null, int? rarityid = null)
+	{
+		var filter = Builders<Card>.Filter.Empty;
+
+		if (setid != null)
+			filter &= Builders<Card>.Filter.Eq(c => c.SetId, setid);
+		
+		if (artist != null)
+			filter &= Builders<Card>.Filter.Eq(c => c.Artist, artist);
+		
+		if (classid != null)
+			filter &= Builders<Card>.Filter.Eq(c => c.ClassId, classid);
+		
+		if (rarityid != null)
+			filter &= Builders<Card>.Filter.Eq(c => c.RarityId, rarityid);
+
+		
+		return await _service.Get(filter);
+	}
+	
+	
 /*
     // GET: api/Card
     [HttpGet]

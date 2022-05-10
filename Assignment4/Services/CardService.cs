@@ -13,4 +13,21 @@ public class CardService
 		_collection = service.Client.GetDatabase("hearthstone").GetCollection<Card>("cards");
 		_logger = logger;
 	}
+
+	public async Task<List<Card>> Get(FilterDefinition<Card> filter)
+	{
+		var cards = await _collection.Find(filter).ToListAsync();
+		var translatedCards = new List<CardDTO>();
+
+		foreach (var card in cards)
+		{
+			translatedCards.Add(new CardDTO
+			{
+				Id = card.Id,
+				Name = card.Name
+			};
+		}
+
+		return cards;
+	}
 }
