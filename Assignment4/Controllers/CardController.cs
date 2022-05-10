@@ -34,7 +34,7 @@ public class CardController : ControllerBase
     }
 
     // GET: api/Card/5
-    [HttpGet("{id}")]
+    [HttpGet("{setId},{artist}")]
     public async Task<ActionResult<Card>> GetCard(int id)
     {
         var card = await _context.Card.FindAsync(id);
