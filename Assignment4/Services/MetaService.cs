@@ -1,6 +1,5 @@
 ﻿using Assignment4.Models;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Assignment4.Services;
@@ -14,25 +13,43 @@ public class MetaService
     {
         _collection = service.Client.GetDatabase("hearthstone").GetCollection<Meta>("meta");
         _logger = logger;
+        
+        _logger.LogInformation("MetaService created");
     }
 
     public List<Set> GetSets()
     {
-        return _collection.Find(new BsonDocument()).FirstOrDefault().Sets;
+	    var sets = _collection.Find(new BsonDocument()).FirstOrDefault().Sets;
+
+	    _logger.LogInformation("Getting {count} rarities", sets.Count);
+
+	    return sets;
     }
     
     public List<Rarity> GetRarities()
     {
-        return _collection.Find(new BsonDocument()).FirstOrDefault().Rarities;
+	    var rarities = _collection.Find(new BsonDocument()).FirstOrDefault().Rarities;
+
+	    _logger.LogInformation("Getting {count} rarities", rarities.Count);
+	    
+	    return rarities;
     }
     
     public List<Class> GetClasses()
     {
-        return _collection.Find(new BsonDocument()).FirstOrDefault().Classes;
+	    var classes = _collection.Find(new BsonDocument()).FirstOrDefault().Classes;
+
+	    _logger.LogInformation("Getting {count} classes", classes.Count);
+	    
+	    return classes;
     }
     
     public List<CardType> GetTypes()
     {
-        return _collection.Find(new BsonDocument()).FirstOrDefault().CardType;
+	    var cardTypes = _collection.Find(new BsonDocument()).FirstOrDefault().CardType;
+	    
+	    _logger.LogInformation("Getting {count} card types", cardTypes.Count);
+	    
+	    return cardTypes;
     }
 }

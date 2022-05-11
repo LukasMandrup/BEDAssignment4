@@ -1,19 +1,10 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Assignment4.Models;
 using Assignment4.Services;
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace Assignment4.Controllers;
 
-[Route("sets")]
 [ApiController]
 public class SetController : ControllerBase
 {
@@ -26,9 +17,27 @@ public class SetController : ControllerBase
 		_logger = logger;
 	}
 
-	[HttpGet]
-	public ActionResult<IEnumerable<Set>> Get()
+	[HttpGet("sets")]
+	public ActionResult<IEnumerable<Set>> GetSets()
 	{
 		return _service.GetSets();
+	}
+	
+	[HttpGet("rarities")]
+	public ActionResult<IEnumerable<Rarity>> GetRarities()
+	{
+		return _service.GetRarities();
+	}
+	
+	[HttpGet("classes")]
+	public ActionResult<IEnumerable<Class>> GetClasses()
+	{
+		return _service.GetClasses();
+	}
+	
+	[HttpGet("types")]
+	public ActionResult<IEnumerable<CardType>> GetTypes()
+	{
+		return _service.GetTypes();
 	}
 }

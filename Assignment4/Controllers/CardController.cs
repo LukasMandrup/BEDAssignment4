@@ -22,6 +22,8 @@ public class CardController : ControllerBase
 	[HttpGet]
 	public async Task<ActionResult<IEnumerable<CardDTO>>> Get(int? page = 0, int? setid = null, string? artist = null, int? classid = null, int? rarityid = null)
 	{
+		_logger.LogInformation("Getting cards - page: {page}, setid: {setid}, artist: {artist}, classid: {classid}, rarityid: {rarityid}", page, setid, artist, classid, rarityid);
+		
 		var filter = Builders<Card>.Filter.Empty;
 
 		if (setid != null)
@@ -36,7 +38,6 @@ public class CardController : ControllerBase
 		if (rarityid != null)
 			filter &= Builders<Card>.Filter.Eq(c => c.RarityId, rarityid);
 
-		
 		return await _service.Get(filter);
 	}
 }

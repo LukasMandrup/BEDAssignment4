@@ -1,4 +1,5 @@
-﻿using Assignment4.Models;
+﻿using System.Diagnostics;
+using Assignment4.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -17,6 +18,8 @@ public class CardService
 		_metaCollection = service.Client.GetDatabase("hearthstone").GetCollection<Meta>("meta");
 		
 		_logger = logger;
+		
+		_logger.LogInformation("CardService created");
 	}
 
 	public async Task<List<CardDTO>> Get(FilterDefinition<Card> filter)
@@ -50,7 +53,7 @@ public class CardService
 				?.FirstOrDefault().Classes
 				.Find(c => c.Id == card?.ClassId)
 				?.Name;
-			
+
 			translatedCards.Add(new CardDTO
 			{
 				Id = card.Id,
@@ -68,6 +71,8 @@ public class CardService
 				FlavorText = card.FlavorText
 			});
 		}
+		
+		_logger.LogInformation("{count} cards found", translatedCards.Count);
 
 		return translatedCards;
 	}
