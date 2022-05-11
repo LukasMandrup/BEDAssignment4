@@ -10,7 +10,7 @@ public class MongoService {
 	
 	public MongoService() 
 	{
-		_client = new MongoClient("mongodb://localhost:27017"); // TODO: Change this to your own connection string
+		_client = new MongoClient("mongodb://localhost:27017/");
 		var db = _client.GetDatabase("hearthstone");
 
 		if (_client.GetDatabase("hearthstone").ListCollections().ToList().Count != 0) return;
