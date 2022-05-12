@@ -8,11 +8,13 @@ public class MongoService {
   
 	private readonly MongoClient _client;
 	private readonly ILogger<MongoService> _logger;
+	private IConfiguration _configuration;
 	
-	public MongoService(ILogger<MongoService> logger)
+	public MongoService(ILogger<MongoService> logger, IConfiguration configuration)
 	{
+		_configuration = configuration;
 		_logger = logger;
-		_client = new MongoClient("mongodb://root:example@assignment4-mongo-1:27017/");
+		_client = new MongoClient(_configuration.GetValue<string>("ConnectionString"));
 		
 		_logger.LogInformation("Accessing database");
 		
