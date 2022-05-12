@@ -12,7 +12,7 @@ public class MongoService {
 	public MongoService(ILogger<MongoService> logger)
 	{
 		_logger = logger;
-		_client = new MongoClient("mongodb://localhost:27017/");
+		_client = new MongoClient("mongodb://root:example@assignment4-mongo-1:27017/");
 		
 		_logger.LogInformation("Accessing database");
 		

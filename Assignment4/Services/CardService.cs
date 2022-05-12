@@ -22,9 +22,16 @@ public class CardService
 		_logger.LogInformation("CardService created");
 	}
 
-	public async Task<List<CardDTO>> Get(FilterDefinition<Card> filter)
+	public async Task<List<CardDTO>> Get(FilterDefinition<Card> filter, int? page, int pageSize)
 	{
-		var cards = await _cardCollection.Find(filter).ToListAsync();
+		List<Card> cards;
+		
+		// If page isn't .1, return page, else return all cards
+		if (page != -1)
+			cards = await _cardCollection.Find(filter).Skip(pageSize * page).Limit(pageSize).ToListAsync();
+		else
+			cards = await _cardCollection.Find(filter).ToListAsync();
+		
 		var translatedCards = new List<CardDTO>();
 
 		foreach (var card in cards)

@@ -15,10 +15,8 @@ public class Meta
 	public List<CardType> CardType { get; set; }
 }
 
-[BsonNoId]
 public class Set
 {
-	[JsonPropertyName("Id")]
 	public int Id { get; set; }
 	public string Name { get; set; }
 	public string Type { get; set; }

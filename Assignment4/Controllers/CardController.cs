@@ -10,6 +10,7 @@ namespace Assignment4.Controllers;
 [ApiController]
 public class CardController : ControllerBase
 {
+	private const int PageSize = 200;
 	private readonly CardService _service;
 	private readonly ILogger<CardController> _logger;
 
@@ -20,7 +21,7 @@ public class CardController : ControllerBase
 	}
 
 	[HttpGet]
-	public async Task<ActionResult<IEnumerable<CardDTO>>> Get(int? page = 0, int? setid = null, string? artist = null, int? classid = null, int? rarityid = null)
+	public async Task<ActionResult<IEnumerable<CardDTO>>> Get(int? page = -1, int? setid = null, string? artist = null, int? classid = null, int? rarityid = null)
 	{
 		_logger.LogInformation("Getting cards - page: {page}, setid: {setid}, artist: {artist}, classid: {classid}, rarityid: {rarityid}", page, setid, artist, classid, rarityid);
 		
@@ -38,6 +39,6 @@ public class CardController : ControllerBase
 		if (rarityid != null)
 			filter &= Builders<Card>.Filter.Eq(c => c.RarityId, rarityid);
 
-		return await _service.Get(filter);
+		return await _service.Get(filter, page, PageSize);
 	}
 }
